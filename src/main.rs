@@ -1,6 +1,6 @@
 
 
-fn create_input_data() -> [([u8; 64], u8); 8] {
+fn create_input_data() -> [([u8; 64], usize); 8] {
     // "hello, world!\n" in a bunch of chunks of between 1 and 3 bytes, random. 
     let input_line = "Hello, World!\n".as_bytes();
     println!("{:?}", input_line);
@@ -23,14 +23,14 @@ fn create_input_data() -> [([u8; 64], u8); 8] {
 
 
     let input_stream = [
-        (in_1, 1u8),
-        (in_2, 2u8),
-        (in_3, 1u8),
-        (in_4, 3u8),
-        (in_5, 2u8),
-        (in_6, 2u8),
-        (in_7, 1u8),
-        (in_8, 2u8),
+        (in_1, 1usize),
+        (in_2, 2usize),
+        (in_3, 1usize),
+        (in_4, 3usize),
+        (in_5, 2usize),
+        (in_6, 2usize),
+        (in_7, 1usize),
+        (in_8, 2usize),
         ];
     
     return  input_stream;
@@ -40,13 +40,47 @@ fn create_input_data() -> [([u8; 64], u8); 8] {
 fn main() {
 
     let input_stream = create_input_data();
-    let x = read_until(input_stream, b'\n');
+    //let x = read_until(input_stream, b'\n');
 
+
+    let mut y = [1, 2, 3, 4, 5];
+
+    let mut y_slice = &mut y[2..4];
+
+    for element in y_slice.iter_mut() {
+        *element = 0;
+    }
+
+    println!("{:?}", y);
 }
 
 
 
-fn read_until(input:[([u8; 64], u8); 8], sep: u8) -> ([u8;64], u8) {
+fn read_until(input:[([u8; 64], usize); 8], sep: u8) -> ([u8;64], u8) {
+    
+    let mut found_sep = false;
+    let mut idx: usize = 0;
+    
+    let mut output_buffer = [0u8; 64];
+    let mut cursor_out: usize = 0;
+
+
+    while !found_sep {
+
+        let input_buffer = input[idx].0;
+        let cursor_in = input[idx].1;
+
+        let input_window = &input_buffer[..cursor_in];
+        let output_window = &output_buffer[cursor_out..(cursor_out + cursor_in)];
+
+        for i in input_window {
+            
+        }
+
+
+
+        
+    }
     unimplemented!()
 }
 
