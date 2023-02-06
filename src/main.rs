@@ -1,6 +1,6 @@
 
 
-fn create_input_data() -> [[u8; 64]; 8] {
+fn create_input_data() -> [([u8; 64], u8); 8] {
     // "hello, world!\n" in a bunch of chunks of between 1 and 3 bytes, random. 
     let input_line = "Hello, World!\n".as_bytes();
     println!("{:?}", input_line);
@@ -12,25 +12,25 @@ fn create_input_data() -> [[u8; 64]; 8] {
 
     // Manually create random data
     let in_1: [u8; 64] = [&input_line[..1], minus_1.as_slice()].concat().try_into().unwrap();
-    let in_2 = [&input_line[1..3], minus_2.as_slice()].concat().try_into().unwrap();
-    let in_3 = [&input_line[3..4], minus_1.as_slice()].concat().try_into().unwrap();
-    let in_4 = [&input_line[4..7], minus_3.as_slice()].concat().try_into().unwrap();
-    let in_5 = [&input_line[7..9], minus_2.as_slice()].concat().try_into().unwrap();
-    let in_6 = [&input_line[9..11], minus_2.as_slice()].concat().try_into().unwrap();
-    let in_7 = [&input_line[11..12], minus_1.as_slice()].concat().try_into().unwrap();
-    let in_8 = [&input_line[12..14], minus_2.as_slice()].concat().try_into().unwrap();
+    let in_2: [u8; 64] = [&input_line[1..3], minus_2.as_slice()].concat().try_into().unwrap();
+    let in_3: [u8; 64] = [&input_line[3..4], minus_1.as_slice()].concat().try_into().unwrap();
+    let in_4: [u8; 64] = [&input_line[4..7], minus_3.as_slice()].concat().try_into().unwrap();
+    let in_5: [u8; 64] = [&input_line[7..9], minus_2.as_slice()].concat().try_into().unwrap();
+    let in_6: [u8; 64] = [&input_line[9..11], minus_2.as_slice()].concat().try_into().unwrap();
+    let in_7: [u8; 64] = [&input_line[11..12], minus_1.as_slice()].concat().try_into().unwrap();
+    let in_8: [u8; 64] = [&input_line[12..14], minus_2.as_slice()].concat().try_into().unwrap();
 
 
 
     let input_stream = [
-        in_1,
-        in_2, 
-        in_3, 
-        in_4, 
-        in_5, 
-        in_6, 
-        in_7, 
-        in_8, 
+        (in_1, 1u8),
+        (in_2, 2u8),
+        (in_3, 1u8),
+        (in_4, 3u8),
+        (in_5, 2u8),
+        (in_6, 2u8),
+        (in_7, 1u8),
+        (in_8, 2u8),
         ];
     
     return  input_stream;
@@ -46,7 +46,7 @@ fn main() {
 
 
 
-fn read_until(input: [[u8; 64]; 8], sep: u8) -> ([u8;64], u8) {
+fn read_until(input:[([u8; 64], u8); 8], sep: u8) -> ([u8;64], u8) {
     unimplemented!()
 }
 
