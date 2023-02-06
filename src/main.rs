@@ -1,8 +1,66 @@
+//#![no_std]
+
+use heapless::Vec;
+
+fn main() {
+
+    let input = create_input_data();
+    let (data, num) = read_until(input, b'\n');
+
+    println!("{:?}", &data[..num])
+}
+
+
+fn read_until(input: [([u8; 64], usize); 8], sep: u8) -> ([u8; 64], usize) {
+    
+    let mut found_sep = false;
+    let mut i: usize = 0;
+    let mut output: Vec<u8, 64> = Vec::new();
+    let mut extras: Vec<u8, 64> = Vec::new();
+    let mut n1: usize = 0;
+    let mut n2: usize = 0;
+
+    while !found_sep {
+        let input_buffer = input[i].0;
+        let input_size = input[i].1;
+        let input_window = &input_buffer[..input_size];
+        if input_window.contains(&sep) {
+            let mut count: usize = 0;
+            for i in input_window{
+                if i == &sep { 
+                    output.extend_from_slice(&input_window[..(count + 1)]).unwrap();
+                    extras.extend_from_slice(&input_window[(count + 1)..]).unwrap();
+                    n1 = n1 + input_size;
+                    n2 = input_size - count;
+                    found_sep = true;
+                } else {
+                    count += 1;
+                }
+            }
+        } else {
+            output.extend_from_slice(input_window).unwrap();
+            n1 = n1 + input_size
+        }
+        i += 1;
+    }
+    
+    let mut out = [0u8; 64];
+    let mut idx: usize = 0;
+    for i in output {
+        out[idx] = i;
+        idx = idx + 1;
+    }
+
+    return (out, n1);
+
+}
+
 
 
 fn create_input_data() -> [([u8; 64], usize); 8] {
     // "hello, world!\n" in a bunch of chunks of between 1 and 3 bytes, random. 
     let input_line = "Hello, World!\n".as_bytes();
+
     println!("{:?}", input_line);
 
     let minus_1 = [b'\0'; 63];
@@ -36,75 +94,3 @@ fn create_input_data() -> [([u8; 64], usize); 8] {
     return  input_stream;
 }
 
-
-fn main() {
-
-    let input_stream = create_input_data();
-    //let x = read_until(input_stream, b'\n');
-
-
-    let mut y = [1, 2, 3, 4, 5];
-
-    let mut y_slice = &mut y[2..4];
-
-    for element in y_slice.iter_mut() {
-        *element = 0;
-    }
-
-    println!("{:?}", y);
-}
-
-
-
-fn read_until(input:[([u8; 64], usize); 8], sep: u8) -> ([u8;64], u8) {
-    
-    let mut found_sep = false;
-    let mut idx: usize = 0;
-    
-    let mut output_buffer = [0u8; 64];
-    let mut cursor_out: usize = 0;
-
-
-    while !found_sep {
-
-        let input_buffer = input[idx].0;
-        let cursor_in = input[idx].1;
-
-        let input_window = &input_buffer[..cursor_in];
-        let output_window = &output_buffer[cursor_out..(cursor_out + cursor_in)];
-
-        for i in input_window {
-            
-        }
-
-
-
-        
-    }
-    unimplemented!()
-}
-
-
-
-//async fn read_until(serial: &mut CdcAcmClass<Driver<T>>, sep: u8) -> Result<[u8; 64], Disconnected> {
-//    
-//    let mut found_sep = false;
-//    let mut out_buffer = [0u8; 64];
-//    let mut in_buffer = [0u8; 64];
-//    let mut out_idx: usize = 0;
-//    let mut extra_vals
-//    
-//    while !found_sep {
-//        let in_idx = serial.read_packet(&mut in_buffer).await?;
-//        let in_window = &in_buffer[..in_idx];
-//        
-//        for i in in_window {
-//            out_idx += 1;
-//            if i == &sep {
-//
-//            }
-//        }
-//    }
-//
-//    unimplemented!()
-//}
