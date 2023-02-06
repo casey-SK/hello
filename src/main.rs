@@ -5,13 +5,18 @@ use heapless::Vec;
 fn main() {
 
     let input = create_input_data();
-    let (data, num) = read_until(input, b'\n');
+    let ((data, num), (_, _)) = read_until(input, b'\n');
 
     println!("{:?}", &data[..num])
 }
 
-
-fn read_until(input: [([u8; 64], usize); 8], sep: u8) -> ([u8; 64], usize) {
+/// returns a tuple of two tuples
+///     Tuple 1 - contains the output buffer until the seperator,
+///     Tuple 2 - contains the extra bits from after the seperator that can be further used as needed.
+/// 
+///     TODO: manage the case where you don't find the seperator before reaching 64 bytes, so now the 
+///     output needs to span multiple buffers (how many buffers????)
+fn read_until(input: [([u8; 64], usize); 8], sep: u8) -> (([u8; 64], usize), ([u8; 64], usize))  {
     
     let mut found_sep = false;
     let mut i: usize = 0;
@@ -51,7 +56,14 @@ fn read_until(input: [([u8; 64], usize); 8], sep: u8) -> ([u8; 64], usize) {
         idx = idx + 1;
     }
 
-    return (out, n1);
+    let mut ext = [0u8; 64]; // extras
+    let mut idx: usize = 0;
+    for i in extras {
+        ext[idx] = i;
+        idx = idx + 1;
+    }
+
+    return ((out, n1), (ext, n2));
 
 }
 
