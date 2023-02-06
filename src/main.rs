@@ -1,8 +1,9 @@
 
+
 fn main() {
 
     let input_stream = create_input_data();
-    
+
 }
 
 
@@ -17,24 +18,26 @@ fn create_input_data() -> [[u8; 64]; 8] {
 
 
     // Manually create random data
-    let in_1 = [&input_line[..1], minus_1.as_slice()].concat();
-    let in_2 = [&input_line[1..3], minus_2.as_slice()].concat();
-    let in_3 = [&input_line[3..4], minus_1.as_slice()].concat();
-    let in_4 = [&input_line[4..7], minus_3.as_slice()].concat();
-    let in_5 = [&input_line[7..9], minus_2.as_slice()].concat();
-    let in_6 = [&input_line[9..11], minus_2.as_slice()].concat();
-    let in_7 = [&input_line[11..12], minus_1.as_slice()].concat();
-    let in_8 = [&input_line[12..14], minus_2.as_slice()].concat();
+    let in_1: [u8; 64] = [&input_line[..1], minus_1.as_slice()].concat().try_into().unwrap();
+    let in_2 = [&input_line[1..3], minus_2.as_slice()].concat().try_into().unwrap();
+    let in_3 = [&input_line[3..4], minus_1.as_slice()].concat().try_into().unwrap();
+    let in_4 = [&input_line[4..7], minus_3.as_slice()].concat().try_into().unwrap();
+    let in_5 = [&input_line[7..9], minus_2.as_slice()].concat().try_into().unwrap();
+    let in_6 = [&input_line[9..11], minus_2.as_slice()].concat().try_into().unwrap();
+    let in_7 = [&input_line[11..12], minus_1.as_slice()].concat().try_into().unwrap();
+    let in_8 = [&input_line[12..14], minus_2.as_slice()].concat().try_into().unwrap();
+
+
 
     let input_stream = [
-        in_1.as_slice(), 
-        in_2.as_slice(), 
-        in_3.as_slice(), 
-        in_4.as_slice(), 
-        in_5.as_slice(), 
-        in_6.as_slice(), 
-        in_7.as_slice(), 
-        in_8.as_slice(), 
+        in_1,
+        in_2, 
+        in_3, 
+        in_4, 
+        in_5, 
+        in_6, 
+        in_7, 
+        in_8, 
         ];
     
     return  input_stream;
