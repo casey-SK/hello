@@ -1,12 +1,5 @@
 
 
-fn main() {
-
-    let input_stream = create_input_data();
-
-}
-
-
 fn create_input_data() -> [[u8; 64]; 8] {
     // "hello, world!\n" in a bunch of chunks of between 1 and 3 bytes, random. 
     let input_line = "Hello, World!\n".as_bytes();
@@ -42,6 +35,22 @@ fn create_input_data() -> [[u8; 64]; 8] {
     
     return  input_stream;
 }
+
+
+fn main() {
+
+    let input_stream = create_input_data();
+    let x = read_until(input_stream, b'\n');
+
+}
+
+
+
+fn read_until(input: [[u8; 64]; 8], sep: u8) -> ([u8;64], u8) {
+    unimplemented!()
+}
+
+
 
 //async fn read_until(serial: &mut CdcAcmClass<Driver<T>>, sep: u8) -> Result<[u8; 64], Disconnected> {
 //    
